@@ -1,0 +1,13 @@
+{
+  "base_url": "/user/db15a482-b0b1-451c-bd0b-c90ef99fd077/nv-4016-r-15969/",
+  "hostname": "0.0.0.0",
+  "password": false,
+  "pid": 32,
+  "port": 8888,
+  "root_dir": "/home/jovyan",
+  "secure": false,
+  "sock": "",
+  "token": "bd48ac51cd8c46969b86cfb0ef5bf64c",
+  "url": "http://jupyter-db15a482-b0b1-451--nv-4016-r-15969---2609a3e0:8888/user/db15a482-b0b1-451c-bd0b-c90ef99fd077/nv-4016-r-15969/",
+  "version": "2.16.0"
+}
