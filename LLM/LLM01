@@ -1,5 +1,5 @@
 
-네, 알겠습니다. 프로젝트의 주요 단계별 요약 및 총평을 남겨드리겠습니다.
+
 
 프로젝트 총평: KoGPT2 기반 RLHF 파이프라인 구축 및 개선
 이 프로젝트는 KoAlpaca-v1.1a 데이터셋을 활용하여 KoGPT2 모델의 성능을 Supervised Fine-Tuning (SFT), Reward Modeling (RM), 그리고 Reinforcement Learning from Human Feedback (RLHF, PPO) 단계를 거쳐 개선하는 것을 목표로 했습니다.
