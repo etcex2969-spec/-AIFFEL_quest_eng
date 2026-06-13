@@ -3,17 +3,17 @@ from crewai import LLM
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
-# 조장님이 만들어 두신 든든한 실시간 무기들 장착냥!
+# 조장님이 새 가상공간 폴더에 예쁘게 배치하신 무기들 정확하게 로드냥!
 from tradingview_api_real_time_trading_system.tools.trading_api_client import TradingAPIClientTool
 from tradingview_api_real_time_trading_system.tools.technical_analyzer import TechnicalAnalyzer
 from tradingview_api_real_time_trading_system.tools.trading_signal_processor import TradingSignalProcessor
 
 @CrewBase
 class TradingviewAPIRealTimeTradingSystemCrew:
-    """TradingviewAPIRealTimeTradingSystem crew - V4.5 초경량/초고속 최적화 버전 뽱!"""
+    """TradingviewAPIRealTimeTradingSystem crew - 얄공 가상공간 초경량 고속 버전 뽱!"""
 
     def __init__(self):
-        # 가성비와 속도가 압도적인 gpt-4o-mini를 크루들의 기본 두뇌로 세팅냥!
+        # 가성비 최고이자 속도가 가장 빠른 gpt-4o-mini 두뇌로 대동단결냥!
         self.base_llm = LLM(model="openai/gpt-4o-mini")
 
     @agent
@@ -22,8 +22,8 @@ class TradingviewAPIRealTimeTradingSystemCrew:
             config=self.agents_config["real_time_api_data_collector"],
             tools=[TradingAPIClientTool()],
             allow_delegation=False,
-            max_iter=3,        # 25번 루프에서 3번으로 줄여 초경량화! 뽱!
-            max_rpm=15,        # 분당 API 요청 제한 가드레일 설치!
+            max_iter=3,        # 25번 무한 루프 돌며 징징대던 것 3번으로 체중 감량!
+            max_rpm=15,        # 거래소 API 차단 방지 가드레일 설치!
             verbose=True,
             llm=self.base_llm,
         )
@@ -34,7 +34,7 @@ class TradingviewAPIRealTimeTradingSystemCrew:
             config=self.agents_config["advanced_technical_analyst"],
             tools=[TechnicalAnalyzer()],
             allow_delegation=False,
-            max_iter=3,        # 다이어트 성공냥!
+            max_iter=3,
             verbose=True,
             llm=self.base_llm,
         )
@@ -73,7 +73,7 @@ class TradingviewAPIRealTimeTradingSystemCrew:
         )
 
     # ==========================================
-    # Tasks 정의 (대본 데이터와 연동)
+    # Tasks 정의 (yaml 파일과 1:1 매칭 완료냥!)
     # ==========================================
     @task
     def collect_market_data_via_api(self) -> Task:
@@ -97,11 +97,11 @@ class TradingviewAPIRealTimeTradingSystemCrew:
 
     @crew
     def crew(self) -> Crew:
-        """불필요한 보고 절차를 생략하고 고속 질주하는 크루 생성"""
+        """무거운 계층형 중간보고 싹 치우고, 순서대로 착착 달리는 고속도로 개통냥!"""
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
-            process=Process.sequential,  # 무거운 계층형 보고 싹 치우고 고속도로 개통! 뽱!
+            process=Process.sequential,  # 초고속 순차형 가동!
             verbose=True,
-            memory=False,                # 과거 기가바이트급 기억 짊어지고 가느라 무겁던 것 해제냥!
+            memory=False,                # 기가바이트급 기억 지우고 가볍게 출발냥!
         )
