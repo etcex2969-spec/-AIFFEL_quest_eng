@@ -1,157 +1,107 @@
 import os
-
 from crewai import LLM
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
+# 조장님이 만들어 두신 든든한 실시간 무기들 장착냥!
 from tradingview_api_real_time_trading_system.tools.trading_api_client import TradingAPIClientTool
 from tradingview_api_real_time_trading_system.tools.technical_analyzer import TechnicalAnalyzer
 from tradingview_api_real_time_trading_system.tools.trading_signal_processor import TradingSignalProcessor
 
-
-
-
-
 @CrewBase
 class TradingviewAPIRealTimeTradingSystemCrew:
-    """TradingviewAPIRealTimeTradingSystem crew"""
+    """TradingviewAPIRealTimeTradingSystem crew - V4.5 초경량/초고속 최적화 버전 뽱!"""
 
-    
+    def __init__(self):
+        # 가성비와 속도가 압도적인 gpt-4o-mini를 크루들의 기본 두뇌로 세팅냥!
+        self.base_llm = LLM(model="openai/gpt-4o-mini")
+
     @agent
     def real_time_api_data_collector(self) -> Agent:
-        
-        
         return Agent(
             config=self.agents_config["real_time_api_data_collector"],
-            
-            
-            tools=[				TradingAPIClientTool()],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
+            tools=[TradingAPIClientTool()],
             allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            
-            
-            max_execution_time=None,
-            llm=LLM(
-                model="openai/gpt-4o-mini",
-                
-                
-            ),
-            
+            max_iter=3,        # 25번 루프에서 3번으로 줄여 초경량화! 뽱!
+            max_rpm=15,        # 분당 API 요청 제한 가드레일 설치!
+            verbose=True,
+            llm=self.base_llm,
         )
         
-    
     @agent
     def advanced_technical_analyst(self) -> Agent:
-        
-        
         return Agent(
             config=self.agents_config["advanced_technical_analyst"],
-            
-            
-            tools=[				TechnicalAnalyzer()],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
+            tools=[TechnicalAnalyzer()],
             allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            
-            
-            max_execution_time=None,
-            llm=LLM(
-                model="openai/gpt-4o-mini",
-                
-                
-            ),
-            
+            max_iter=3,        # 다이어트 성공냥!
+            verbose=True,
+            llm=self.base_llm,
         )
-        
-    
-    @agent
-    def trading_signal_processor(self) -> Agent:
-        
-        
-        return Agent(
-            config=self.agents_config["trading_signal_processor"],
-            
-            
-            tools=[				TradingSignalProcessor()],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            
-            
-            max_execution_time=None,
-            llm=LLM(
-                model="openai/gpt-4o-mini",
-                
-                
-            ),
-            
-        )
-        
-    
 
-    
+    @agent
+    def risk_compliance_manager(self) -> Agent:
+        return Agent(
+            config=self.agents_config["risk_compliance_manager"],
+            tools=[],
+            allow_delegation=False,
+            max_iter=3,
+            verbose=True,
+            llm=self.base_llm,
+        )
+
+    @agent
+    def portfolio_strategist(self) -> Agent:
+        return Agent(
+            config=self.agents_config["portfolio_strategist"],
+            tools=[],
+            allow_delegation=False,
+            max_iter=3,
+            verbose=True,
+            llm=self.base_llm,
+        )
+
+    @agent
+    def trading_execution_specialist(self) -> Agent:
+        return Agent(
+            config=self.agents_config["trading_execution_specialist"],
+            tools=[TradingSignalProcessor()],
+            allow_delegation=False,
+            max_iter=3,
+            verbose=True,
+            llm=self.base_llm,
+        )
+
+    # ==========================================
+    # Tasks 정의 (대본 데이터와 연동)
+    # ==========================================
     @task
     def collect_market_data_via_api(self) -> Task:
-        return Task(
-            config=self.tasks_config["collect_market_data_via_api"],
-            markdown=False,
-            
-            
-        )
+        return Task(config=self.tasks_config["collect_market_data_via_api"])
     
     @task
     def generate_technical_signals(self) -> Task:
-        return Task(
-            config=self.tasks_config["generate_technical_signals"],
-            markdown=False,
-            
-            
-        )
+        return Task(config=self.tasks_config["generate_technical_signals"])
     
     @task
-    def process_trading_signals(self) -> Task:
-        return Task(
-            config=self.tasks_config["process_trading_signals"],
-            markdown=False,
-            
-            
-        )
-    
+    def assess_risk_and_compliance(self) -> Task:
+        return Task(config=self.tasks_config["assess_risk_and_compliance"])
+
+    @task
+    def optimize_portfolio_allocation(self) -> Task:
+        return Task(config=self.tasks_config["optimize_portfolio_allocation"])
+
+    @task
+    def execute_trades_and_log(self) -> Task:
+        return Task(config=self.tasks_config["execute_trades_and_log"])
 
     @crew
     def crew(self) -> Crew:
-        """Creates the TradingviewAPIRealTimeTradingSystem crew"""
-
-        # Custom manager agent for hierarchical process
-        manager_agent = Agent(
-            role="Crew Manager",
-            goal="Coordinate the team to achieve the objective efficiently",
-            backstory="An experienced manager skilled in delegation and coordination",
-            llm=LLM(model="anthropic/claude-fable-5"),
-            allow_delegation=True,
-        )
-
+        """불필요한 보고 절차를 생략하고 고속 질주하는 크루 생성"""
         return Crew(
-            agents=self.agents,  # Automatically created by the @agent decorator
-            tasks=self.tasks,  # Automatically created by the @task decorator
-            process=Process.hierarchical,
+            agents=self.agents,
+            tasks=self.tasks,
+            process=Process.sequential,  # 무거운 계층형 보고 싹 치우고 고속도로 개통! 뽱!
             verbose=True,
-
-
-            manager_agent=manager_agent,
-
-
-            chat_llm=LLM(model="openai/gpt-4o-mini"),
+            memory=False,                # 과거 기가바이트급 기억 짊어지고 가느라 무겁던 것 해제냥!
         )
-
-
