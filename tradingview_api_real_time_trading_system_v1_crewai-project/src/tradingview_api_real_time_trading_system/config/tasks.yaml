@@ -1,0 +1,26 @@
+---
+collect_market_data_via_api:
+  description: "{exchange} 거래소의 {symbol} 심볼에 대한 실시간 시장 데이터를 API를 통해 수집합니다. 가격 티커,
+    호가창, 최근 거래 내역, 그리고 OHLCV 캔들 데이터를 수집하여 다음 분석 단계에서 사용할 수 있도록 정리합니다. 데이터 품질을 검증하고
+    비정상적인 값들을 필터링합니다."
+  expected_output: 'API를 통해 수집된 종합 시장 데이터: 현재가, 24시간 변동률, 거래량, 호가창 스프레드, 최근 거래 내역,
+    OHLCV 캔들 데이터 (최소 20개), 데이터 수집 타임스탬프, 데이터 신뢰도 지표'
+  agent: real_time_api_data_collector
+generate_technical_signals:
+  description: 수집된 OHLCV 데이터를 활용하여 {symbol}의 고급 기술적 분석을 수행합니다. RSI, MACD, 볼린저 밴드,
+    이동평균선 등 다양한 지표를 계산하고, 각 지표별 매매 신호를 생성합니다. 신호의 강도와 신뢰도를 0-10 점수로 평가하고, 지지/저항 레벨을
+    식별하여 종합적인 분석 결과를 제공합니다.
+  expected_output: '기술적 분석 결과서: 계산된 모든 지표 값들, 개별 지표별 매매 신호 (BUY/SELL/HOLD), 신호 강도
+    점수 (0-10), 신뢰도 레벨, 지지/저항 가격 레벨, 종합 추천 신호, 목표가 및 손절매 제안'
+  agent: advanced_technical_analyst
+  context:
+  - collect_market_data_via_api
+process_trading_signals:
+  description: 분석된 기술적 신호와 트레이딩뷰 웹훅 데이터를 처리하여 실제 거래 주문을 생성합니다. {account_balance}와
+    {risk_percentage}를 기반으로 적절한 포지션 사이즈를 계산하고, 리스크 관리 규칙을 적용합니다. 각 신호에 대해 감사 로그를 생성하고,
+    실행 가능한 거래 주문 형태로 결과를 포맷팅합니다.
+  expected_output: '실행 준비된 거래 주문서: 주문 유형 (BUY/SELL), 계산된 포지션 사이즈, 진입가격, 손절매 레벨, 목표
+    수익가, 리스크-보상 비율, 예상 최대 손실, 주문 ID 및 타임스탬프, 감사 로그, 리스크 관리 점검 결과'
+  agent: trading_signal_processor
+  context:
+  - generate_technical_signals
