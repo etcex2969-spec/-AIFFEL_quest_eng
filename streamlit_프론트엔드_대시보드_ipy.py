@@ -145,3 +145,42 @@ with col_right:
             st.caption(f"↳ {log['report']}")
     else:
         st.write("대기 상태: 전송된 제어 명령이 없습니다.")
+        import streamlit as st
+import requests
+
+# ==========================================
+# 🛡️ [1단계] 스트림릿 도어락 (프론트엔드 방어막)
+# ==========================================
+password = st.text_input("떵컴 V4.5 1급 기밀 암호를 입력하시오냥:", type="password")
+
+# 암호가 틀리면 여기서 가차 없이 코드를 멈춰버립니다 뽱!
+if password != "nyang1234":
+    st.warning("경고! 인가되지 않은 접근입니다냥! 🚨")
+    st.stop() 
+
+# 암호가 맞으면 이 아래로 넘어옵니다냥!
+st.success("얄공 조장님 환영합니다냥!!! 보안 해제 완료! 🔓")
+st.title("📈 V4.5 금융 AI 오케스트레이터 실가동!!!")
+
+st.divider() # 화면에 예쁜 가로줄 긋기 뽱!
+
+# ==========================================
+# 🕵️‍♂️ [3단계] 백엔드에 암호표 던지며 데이터 가져오기
+# ==========================================
+backend_url = "http://127.0.0.1:8000/data" # 조장님의 FastAPI 백엔드 주소
+
+# 백엔드 초병(FastAPI)에게 보여줄 1급 기밀 암호표 (헤더)
+headers = {"x-api-key": "super_secret_nyang"} 
+
+# 조장님이 버튼을 누르면 데이터를 뽱! 가져옵니다.
+if st.button("위대한 떵컴 서버에서 데이터 가져오기 뽱!!!"):
+    
+    # 3단계 핵심: headers 주머니에 암호표를 넣어서 백엔드로 쏩니다냥!
+    response = requests.get(backend_url, headers=headers)
+    
+    # 백엔드 초병이 암호를 확인하고 문을 열어줬다면 (상태코드 200번)
+    if response.status_code == 200:
+        st.write("백엔드 침투 완벽 성공!!! 뽱!!!", response.json())
+        # (여기에 조장님이 그리시려던 삐까뻔쩍한 금융 차트 코드를 넣으시면 됩니다냥!)
+    else:
+        st.error("백엔드 접근 실패냥!!! FastAPI 암호를 다시 확인하십쇼!!!")
