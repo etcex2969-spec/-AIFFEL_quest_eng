@@ -89,3 +89,20 @@ if __name__ == "__main__":
     config = uvicorn.Config(app, host="0.0.0.0", port=8000, loop="asyncio")
     server = uvicorn.Server(config)
     await server.serve()
+    from fastapi import FastAPI, HTTPException, Header
+
+app = FastAPI()
+
+# 백엔드 서버만 알고 있는 절대 암호
+SECRET_KEY = "super_secret_nyang"
+
+# 데이터를 요청받을 때 'x-api-key'라는 암호표를 같이 검사합니다냥!
+@app.get("/data")
+def get_financial_data(x_api_key: str = Header(None)):
+    
+    # 만약 암호표를 안 가져왔거나, 암호가 틀렸다면?!
+    if x_api_key != SECRET_KEY:
+        raise HTTPException(status_code=401, detail="누구냐 넌! 접근 금지다냥! 🚫")
+    
+    # 암호가 완벽하게 맞았다면 귀한 데이터를 내어줍니다냥!
+    return {"message": "인증 성공! 차트와 AI 데이터를 전송합니다냥! 뽱!"}
