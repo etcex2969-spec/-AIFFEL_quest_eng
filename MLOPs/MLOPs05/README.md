@@ -10,3 +10,4 @@ https://www.notion.so/0702-Mlops-5-CheetSheet-38dae2ab06258051b16be4c44daf856d?s
 https://academictorrents.com/details/9b13183dc4d60676b773c9e2cd6de5e5542cee9a
 https://app.notion.com/p/0702-Mlops-5-CheetSheet-38dae2ab06258051b16be4c44daf856d?source=copy_link#38dae2ab06258087984ee859b251ab4d
 https://app.notion.com/p/0702-Mlops-5-CheetSheet-38dae2ab06258051b16be4c44daf856d?source=copy_link#38dae2ab062580db9cd9c106f85914e5
+https://app.notion.com/p/0702-Mlops-5-CheetSheet-38dae2ab06258051b16be4c44daf856d?source=copy_link#38dae2ab062580ac9fb1d5843e5fa627
